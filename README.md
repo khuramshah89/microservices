@@ -1,2 +1,2 @@
 # microservices
-spring cloud implementation with Eureka, Zuul and FeignClient
+spring cloud implementation with Eureka, Zuul and FeignClient for load balancer.
