@@ -10,6 +10,7 @@ public class Gallery {
 
     private Integer id;
     private List<Object> images;
+    private Image img;
 
 
 
@@ -27,5 +28,13 @@ public class Gallery {
 
     public void setImages(List<Object> images) {
         this.images = images;
+    }
+
+    public Image getImg() {
+        return img;
+    }
+
+    public void setImg(Image img) {
+        this.img = img;
     }
 }

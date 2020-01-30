@@ -25,4 +25,9 @@ public class ImagesController {
         return images;
     }
 
+    @RequestMapping(value = "/img")
+    public Image getImage() {
+        return new Image(1, "Treehouse of Horror V", "https://www.imdb.com/title/tt0096697/mediaviewer/rm3842005760");
+    }
+
 }

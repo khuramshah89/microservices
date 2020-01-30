@@ -1,19 +1,11 @@
 package com.eureka.client.service.galleryservice.Controller;
 
 import com.eureka.client.service.galleryservice.Model.Gallery;
+import com.eureka.client.service.galleryservice.Model.Image;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.client.ServiceInstance;
-import org.springframework.cloud.client.discovery.DiscoveryClient;
-import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.cloud.client.loadbalancer.LoadBalancerClient;
-import org.springframework.context.annotation.Bean;
-import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.core.env.Environment;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -57,9 +49,12 @@ public class GalleryController {
         Gallery gallery = new Gallery();
         gallery.setId(id);
 
-        List<Object> images = restTemplate.getForObject(baseUrl, List.class);
-
+        List<Object> images = restTemplate.getForObject("http://image-service/images", List.class);
+//        List<Object> images = restTemplate.getForObject(baseUrl, List.class);
         gallery.setImages(images);
+
+        Image image=restTemplate.getForObject("http://image-service/img",Image.class);
+        gallery.setImg(image);
 
         return gallery;
 
@@ -71,13 +66,6 @@ public class GalleryController {
     @RequestMapping("/admin")
     public String homeAdmin() {
         return "This is the admin area of Gallery service running at port: " + env.getProperty("local.server.port");
-    }
-
-
-    @Bean
-    @LoadBalanced
-    public RestTemplate restTemplate() {
-        return new RestTemplate();
     }
 }
 
